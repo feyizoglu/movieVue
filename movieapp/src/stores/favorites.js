@@ -1,20 +1,22 @@
+// src/stores/favorites.js
+
 import { defineStore } from 'pinia'
 
 export const useFavoritesStore = defineStore('favorites', {
   state: () => ({
-    favorites: []
+    favorites: [] // Store both movies and TV shows with media_type
   }),
   actions: {
-    toggleFavorite(movie) {
-      const index = this.favorites.findIndex(fav => fav.id === movie.id)
+    toggleFavorite(media) {
+      const index = this.favorites.findIndex(fav => fav.id === media.id && fav.media_type === media.media_type)
       if (index === -1) {
-        this.favorites.push(movie)
+        this.favorites.push(media)
       } else {
         this.favorites.splice(index, 1)
       }
     },
-    isFavorite(movie) {
-      return this.favorites.some(fav => fav.id === movie.id)
+    isFavorite(media) {
+      return this.favorites.some(fav => fav.id === media.id && fav.media_type === media.media_type)
     }
   }
 })
